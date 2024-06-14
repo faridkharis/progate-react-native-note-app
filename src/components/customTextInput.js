@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, Text, StyleSheet, View } from 'react-native';
 
-const customTextInput = ({
+const CustomTextInput = ({
   text,
   onChange,
   label,
@@ -34,4 +34,4 @@ const customTextInput = ({
   );
 }
 
-export default customTextInput;
+export default CustomTextInput;

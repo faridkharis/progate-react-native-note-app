@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-const customButton = ({
+const CustomButton = ({
   backgroundColor,
   color,
   text,
@@ -15,6 +15,7 @@ const customButton = ({
       backgroundColor,
       width,
       padding: 10,
+      borderRadius: 5,
     },
     buttonText: {
       fontSize,
@@ -29,4 +30,4 @@ const customButton = ({
   );
 }
 
-export default customButton;
+export default CustomButton;
