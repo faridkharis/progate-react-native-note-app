@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import CustomButton from '../components/CustomButton';
 
-const NoteCard = ({ item, setCurrentPage }) => (
+const NoteCard = ({ item, setCurrentPage, deleteNote }) => (
   <View style={styles.card}>
     <Text style={styles.cardTitle}>{item.title}</Text>
     <Text>{item.desc}</Text>
@@ -23,33 +23,35 @@ const NoteCard = ({ item, setCurrentPage }) => (
         text="Delete"
         fontSize={12}
         width={100}
-        onPress={() => {}}
+        onPress={() => deleteNote(item.id)}
       />
     </View>
   </View>
 )
 
-const Home = ({ noteList, setCurrentPage }) => (
-  <View style={styles.container}>
-    <CustomButton
-      backgroundColor="#DDD"
-      color="#203239"
-      text="Add Note"
-      width="100%"
-      onPress={() => {
-        setCurrentPage('add')
-      }}
-    />
-    <FlatList
-      showsVerticalScrollIndicator={false}
-      data={noteList}
-      renderItem={({ item }) => (
-        <NoteCard item={item} setCurrentPage={setCurrentPage} />
-      )}
-      keyExtractor={(item) => item.id}
-    />
-  </View>
-)
+const Home = ({ noteList, setCurrentPage, deleteNote }) => {  
+  return (
+    <View style={styles.container}>
+      <CustomButton
+        backgroundColor="#DDD"
+        color="#203239"
+        text="Add Note"
+        width="100%"
+        onPress={() => {
+          setCurrentPage('add')
+        }}
+      />
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={noteList}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <NoteCard item={item} setCurrentPage={setCurrentPage} deleteNote={deleteNote} />
+        )}
+      />
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
