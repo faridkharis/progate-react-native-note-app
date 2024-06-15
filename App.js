@@ -4,11 +4,14 @@ import AddNote from './src/screens/AddNote';
 import EditNote from './src/screens/EditNote';
 
 const CurrentPageWidget = ({
-  noteList,
   currentPage,
   setCurrentPage,
+  noteList,
   addNote,
-  deleteNote
+  editNote,
+  deleteNote,
+  currentNote,
+  setCurrentNote,
 }) => {
   switch (currentPage) {
     case 'home':
@@ -17,6 +20,7 @@ const CurrentPageWidget = ({
           noteList={noteList}
           setCurrentPage={setCurrentPage}
           deleteNote={deleteNote}
+          setCurrentNote={setCurrentNote}
         />
       )
     case 'add':
@@ -27,7 +31,13 @@ const CurrentPageWidget = ({
         />
       )
     case 'edit':
-      return <EditNote />
+      return (
+        <EditNote
+          item={currentNote}
+          setCurrentPage={setCurrentPage}
+          editNote={editNote}
+        />
+      )
     default:
       return <Home />
   };
@@ -49,6 +59,8 @@ const App = () => {
     },
   ]);
 
+  const [currentNote, setCurrentNote] = useState(null);
+
   const addNote = (title, desc) => {
     const id = noteList.length > 0 ? noteList[noteList.length - 1].id + 1 : 1;
   
@@ -62,10 +74,19 @@ const App = () => {
     ]);
   };
 
-  const deleteNote = (noteId) => {
-    const updatedNoteList =  noteList.filter(note => note.id !== noteId);
+  const editNote = (noteId, newTitle, newDesc) => {
+    const updatedNoteList = noteList.map((note) => (
+      note.id == noteId ? {...note, title: newTitle, desc: newDesc} : note
+    ));
+
     setNoteList(updatedNoteList);
   }
+
+  const deleteNote = (noteId) => {
+    const updatedNoteList =  noteList.filter(note => note.id !== noteId);
+
+    setNoteList(updatedNoteList);
+  };
 
   return (
     <CurrentPageWidget
@@ -73,7 +94,10 @@ const App = () => {
       setCurrentPage={setCurrentPage}
       noteList={noteList}
       addNote={addNote}
+      editNote={editNote}
       deleteNote={deleteNote}
+      currentNote={currentNote}
+      setCurrentNote={setCurrentNote}
     />
   );
 };

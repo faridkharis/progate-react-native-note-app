@@ -2,34 +2,39 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import CustomButton from '../components/CustomButton';
 
-const NoteCard = ({ item, setCurrentPage, deleteNote }) => (
-  <View style={styles.card}>
-    <Text style={styles.cardTitle}>{item.title}</Text>
-    <Text>{item.desc}</Text>
-    <View style={styles.buttons}>
-      <CustomButton
-        backgroundColor="#FFC300"
-        color="#151D3B"
-        text="Edit"
-        fontSize={12}
-        width={100}
-        onPress={() => {
-          setCurrentPage('edit')
-        }}
-      />
-      <CustomButton
-        backgroundColor="#D82148"
-        color="#fff"
-        text="Delete"
-        fontSize={12}
-        width={100}
-        onPress={() => deleteNote(item.id)}
-      />
+const NoteCard = ({ item, setCurrentPage, deleteNote, setCurrentNote }) => {
+  
+  const handleEdit = () => {
+    setCurrentNote(item);
+    setCurrentPage('edit');
+  }
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>{item.title}</Text>
+      <Text>{item.desc}</Text>
+      <View style={styles.buttons}>
+        <CustomButton
+          backgroundColor="#FFC300"
+          color="#151D3B"
+          text="Edit"
+          fontSize={12}
+          width={100}
+          onPress={handleEdit}
+        />
+        <CustomButton
+          backgroundColor="#D82148"
+          color="#fff"
+          text="Delete"
+          fontSize={12}
+          width={100}
+          onPress={() => deleteNote(item.id)}
+        />
+      </View>
     </View>
-  </View>
-)
+  )
+}
 
-const Home = ({ noteList, setCurrentPage, deleteNote }) => {  
+const Home = ({ noteList, setCurrentPage, deleteNote, setCurrentNote }) => { 
   return (
     <View style={styles.container}>
       <CustomButton
@@ -46,7 +51,7 @@ const Home = ({ noteList, setCurrentPage, deleteNote }) => {
         data={noteList}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <NoteCard item={item} setCurrentPage={setCurrentPage} deleteNote={deleteNote} />
+          <NoteCard item={item} setCurrentPage={setCurrentPage} deleteNote={deleteNote} setCurrentNote={setCurrentNote} />
         )}
       />
     </View>
